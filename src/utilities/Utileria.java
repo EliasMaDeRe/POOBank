@@ -1,13 +1,16 @@
+package utilities;
+
 import java.util.UUID;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Utileria {    
-    static String generarId() {
+public class Utileria {  
+
+    public static String generarId() {
         return UUID.randomUUID().toString();
     }
 
-    static String generarFecha() {
+    public static String generarFecha() {
         return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(LocalDateTime.now());
     }
 }
