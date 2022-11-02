@@ -16,7 +16,15 @@ public class AuthService {
 			// Aquí va si no se encuentra el usuario.
 			return new WrapperResponse<>(false, "Inicio de sesión incorrecto.", null);
 		}
+		//falta verificar que la contraseña es correcta
+		//falta guardar token en base de datos
+		String token = "123";
+		return new WrapperResponse<>(true, "Inicio de sesión correcto.", new LoginResponseDTO(new UserDTO(user.getUsername()),token));
+	}
 
-		return new WrapperResponse<>(true, "Inicio de sesión correcto.", null);
+	public WrapperResponse<Boolean> logout(LogoutRequestDTO user){
+
+		return new WrapperResponse<Boolean>(true, "Cierre de sesión correcto", true);
+
 	}
 }

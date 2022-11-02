@@ -21,4 +21,8 @@ public class AuthController {
 	public WrapperResponse<LoginResponseDTO> login(LoginRequestDTO user) {
 		return authService.login(user);
 	}
+
+	public WrapperResponse<Boolean> logout(LogoutRequestDTO user) {
+		return authService.logout(user);
+	}
 }
