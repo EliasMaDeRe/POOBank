@@ -12,6 +12,8 @@ public class AuthController {
 	// - Inicio de sesión
 	// - Registro de nuevo usuario
 
+	// test
+
 	// Controlador: Lo unico que hace es llamar a un servicio. NO LLEVA IMPLEMENTACIÓN!!!
 	// EL SERVICIO ES EL QUE TIENE LA IMPLEMENTACIÓN!!!
 
