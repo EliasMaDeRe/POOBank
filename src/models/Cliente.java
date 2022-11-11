@@ -1,16 +1,23 @@
 package models;
 
-public class Cliente {
+import java.sql.SQLException;
 
+public class Cliente {
+    private DB_query nube = new DB_query();
+
+    private int Id;
     private String nombre;
     private String apellido;
     private String CURP;
     private Cuenta[] cuentas = new Cuenta[3];
 
-    public Cliente(String nombre, String apellido, String CURP) {
+    public Cliente(String nombre, String apellido, String CURP) throws ClassNotFoundException, SQLException {
         this.nombre = nombre;
         this.apellido = apellido;
         this.CURP = CURP;
+        int no_cunetas =this.cuentas.length;
+        //subimos a la nuevo y damos el nuevo id generado
+        Id = nube.NuevoCliente(nombre, apellido, CURP, no_cunetas); 
     }
 
     public String getNombre() {
@@ -43,5 +50,13 @@ public class Cliente {
 
     public void setCuentas(Cuenta[] cuentas) {
         this.cuentas = cuentas;
+    }
+
+    public int getID() {
+        return Id;
+    }
+
+    public int NumberOfCuentas() {
+        return this.cuentas.length;
     }
 }
