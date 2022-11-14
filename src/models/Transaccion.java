@@ -2,36 +2,38 @@ package models;
 import java.io.*;
 import java.sql.SQLException;
 
+import models.database.DB_query;
 import utilities.Utileria;
 
 public abstract class Transaccion {
     protected DB_query nube = new DB_query();
-    protected String id;
+    protected int id;
     protected String fecha;
     protected double monto;
-    protected String numeroDeCuenta;
+    protected int numeroDeCuenta;
 
     protected Transaccion() {  } //Constructor vacio
 
-    protected Transaccion(String numeroDeCuenta, double monto) {
-        this.id = Utileria.generarId();
+    protected Transaccion(Integer numeroDeCuenta, double monto) {
         this.fecha = Utileria.generarFecha();
         this.numeroDeCuenta = numeroDeCuenta;
         this.monto = monto;
     }
 
-    protected void Depositos(Deposito depo ) throws ClassNotFoundException, SQLException {  
-        nube.GenerarDeposito(depo);
-    }
+    public int getId() {
+        return id;
+    } 
 
-    protected void Retiro(Retiro retiro ) throws ClassNotFoundException, SQLException {  
-        nube.GenerarDeposito(retiro);
-    }
+    public String getfecha() {
+        return fecha;
+    } 
 
-    protected void Transferencia(Transferencia trans) throws ClassNotFoundException, SQLException {  
-        nube.GenerarDeposito(trans);
-    }
+    public double getmonto() {
+        return monto;
+    } 
 
-
+    public int getcuenta() {
+        return numeroDeCuenta;
+    } 
     
 }
