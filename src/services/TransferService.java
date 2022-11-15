@@ -6,7 +6,9 @@ import models.Transferencia;
 import utilities.WrapperResponse;
 public class TransferService {
 
-
+	
+	Cuenta cuenta = new Cuenta();
+	
     public WrapperResponse<TransferResponseDTO> transfer(TransferRequestDTO transfer){
 
 		cuentaEmisora = cuenta.findAccountByAccountNumber(transfer.getNumeroDeCuenta());
