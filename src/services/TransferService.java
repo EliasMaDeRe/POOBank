@@ -11,7 +11,7 @@ public class TransferService {
 	
     public WrapperResponse<TransferResponseDTO> transfer(TransferRequestDTO transfer){
 
-		cuentaEmisora = cuenta.findAccountByAccountNumber(transfer.getNumeroDeCuenta());
+		cuentaEmisora = cuenta.findAccountByAccountNumber(transfer.getNumeroDeCuentaEmisora());
 		cuentaReceptora = cuenta.findAccountByAccountNumber(transfer.getDestino());
 
         if ((cuentaEmisora.isPresent())){ //Checa si existe la cuenta emisora
@@ -19,7 +19,7 @@ public class TransferService {
 				if(cuentaEmisora.getSaldo()>=transfer.getMonto()){	//Checa si tiene suficiente dinero la emisora					
 					cuentaEmisora.setSaldo(sustraerMonto(transfer.getMonto(), cuentaEmisora.getSaldo()));
 					cuentaReceptora.setSaldo(agregarMonto(transfer.getMonto(), cuentaReceptora.getSaldo()));
-					return new WrapperResponse<TransferResponseDTO>(true, "Transferencia exitosa", new transferResponseDTO(transfer.getNumeroDeCuenta(), transfer.getDestino(), transfer.getMonto(),sustraerMonto(transfer.getMonto(), transfer.getSaldoEmisor()), agregarMonto(transfer.getMonto(), transfer.getSaldoDestino()), transfer.getConcepto())); //Devuelve los valores nuevos
+					return new WrapperResponse<TransferResponseDTO>(true, "Transferencia exitosa", new transferResponseDTO(transfer.getNumeroDeCuentaEmisora(), transfer.getDestino(), transfer.getMonto(), transfer.getConcepto())); //Devuelve los valores nuevos
 				} else {
 					return new WrapperResponse<TransferResponseDTO>(false, "No se pudo sustraer el monto de la cuenta emisora", null);
 				}
@@ -44,7 +44,7 @@ public class TransferService {
 
 	// POR IMPLEMENTAR EN Cuenta: 
 
-	// Optional<Cuenta> findAccountByAccountNumber(numeroDeCuenta)
-	// set saldo
+	// Optional<Cuenta> findAccountByAccountNumber(String numeroDeCuenta)
+	// void setSaldo(double saldo)
 
 }
