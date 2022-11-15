@@ -1,20 +1,22 @@
 package services;
 
 import DTO.*;
+import models.Cuenta;
 import models.Transferencia;
 import utilities.WrapperResponse;
 public class TransferService {
 
-	private Transferencia Transferencia = new Transferencia();
-
 
     public WrapperResponse<TransferResponseDTO> transfer(TransferRequestDTO transfer){
 
-        if ((Transferencia.findAccountAccountNumber(transfer.getNumeroDeCuenta()).isPresent())){ //Checa si existe el numero emisor
-			if ((Transferencia.findAccountByAccountNumber(transfer.getDestino()).isPresent())){	//Checa si existe el numero receptor
-				if(transfer.getSaldoEmisor()>=transfer.getMonto()){	//Checa si tiene suficiente dinero la emisora
-					transfer.getNumeroDeCuenta().setSaldoEmisor() = sustraerMonto(transfer.getMonto(), transfer.getSaldoEmisor());
-					transfer.getDestino().setSaldoDestino() = sustraerMonto(transfer.getMonto(), transfer.getSaldoDestino());
+		cuentaEmisora = cuenta.findAccountByAccountNumber(transfer.getNumeroDeCuenta());
+		cuentaReceptora = cuenta.findAccountByAccountNumber(transfer.getDestino());
+
+        if ((cuentaEmisora.isPresent())){ //Checa si existe la cuenta emisora
+			if ((cuentaReceptora.isPresent())){	//Checa si existe ela cuenta receptora
+				if(cuentaEmisora.getSaldo()>=transfer.getMonto()){	//Checa si tiene suficiente dinero la emisora					
+					cuentaEmisora.setSaldo(sustraerMonto(transfer.getMonto(), cuentaEmisora.getSaldo()));
+					cuentaReceptora.setSaldo(agregarMonto(transfer.getMonto(), cuentaReceptora.getSaldo()));
 					return new WrapperResponse<TransferResponseDTO>(true, "Transferencia exitosa", new transferResponseDTO(transfer.getNumeroDeCuenta(), transfer.getDestino(), transfer.getMonto(),sustraerMonto(transfer.getMonto(), transfer.getSaldoEmisor()), agregarMonto(transfer.getMonto(), transfer.getSaldoDestino()), transfer.getConcepto())); //Devuelve los valores nuevos
 				} else {
 					return new WrapperResponse<TransferResponseDTO>(false, "No se pudo sustraer el monto de la cuenta emisora", null);
@@ -25,6 +27,9 @@ public class TransferService {
         } else {
             return new WrapperResponse<TransferResponseDTO>(false, "La cuenta emisora no existe", null);
 		}
+
+		Transferencia transferencia = new Transferencia(transfer.getNumeroDeCuenta(), transfer.getDestino(), transfer.getMonto(), transfer.getConcepto())
+
     }
 
 	public double sustraerMonto(double monto, double saldo){
@@ -35,8 +40,9 @@ public class TransferService {
 		return saldo+monto;
 	}
 
-	// POR IMPLEMENTAR EN TRANSFER MODEL: 
+	// POR IMPLEMENTAR EN Cuenta: 
 
-	// Optional<TRANSFERMODEL> findAccountByAccountNumber(numeroDeCuenta)
+	// Optional<Cuenta> findAccountByAccountNumber(numeroDeCuenta)
+	// set saldo
 
 }
