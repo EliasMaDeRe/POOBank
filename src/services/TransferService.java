@@ -11,13 +11,13 @@ public class TransferService {
 	
     public WrapperResponse<Transferencia> transfer(TransferRequestDTO transfer){
 
-		cuentaEmisora = cuenta.findAccountByAccountNumber(transfer.getNumeroDeCuentaEmisora());
-		cuentaReceptora = cuenta.findAccountByAccountNumber(transfer.getDestino());
+		cuentaEmisora = cuenta.findAccountByAccountNumber(transfer.getNumeroCuentaEmisora());
+		cuentaReceptora = cuenta.findAccountByAccountNumber(transfer.getNumeroCuentaDestino());
 
 		boolean ok;
 		String mensaje;
 
-		Transferencia transferencia = new Transferencia(transfer.getNumeroDeCuenta(), transfer.getDestino(), transfer.getMonto(), transfer.getConcepto())
+		Transferencia transferencia = new Transferencia(transfer.getNumeroCuentaEmisora(), transfer.getNumeroCuentaDestino(), transfer.getMonto(), transfer.getConcepto());
 
         if ((cuentaEmisora.isPresent())){ //Checa si existe la cuenta emisora
 			if ((cuentaReceptora.isPresent())){	//Checa si existe ela cuenta receptora
