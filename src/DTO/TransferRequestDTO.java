@@ -1,54 +1,50 @@
 package DTO;
 
 public class TransferRequestDTO {
-    private String destino;
-    private String numeroDeCuenta;
-    private double saldoEmisor;
-    private double saldoDestino;
+    private String numeroCuentaDestino;
+    private String numeroCuentaEmisora;
     private String concepto;
     private double monto;
 
 	public TransferRequestDTO() {}
 
-	public TransferRequestDTO(String destino, String numeroDeCuenta, double saldoEmisor, double saldoDestino, String concepto, double monto) {
-		this.destino = destino;   
-        this.numeroDeCuenta = numeroDeCuenta;
-        this.saldoEmisor = saldoEmisor;
-        this.saldoDestino = saldoDestino;
+	public TransferRequestDTO(String numeroCuentaDestino, String numeroCuentaEmisora, String concepto, double monto) {
+		this.numeroCuentaDestino = numeroCuentaDestino;   
+        this.numeroCuentaEmisora = numeroCuentaEmisora;
         this.concepto = concepto;
         this.monto = monto;
 	}
 
-    public String getDestino() {
-        return destino;
+    public String getNumeroCuentaDestino() {
+        return numeroCuentaDestino;
     }
 
-    public String getNumeroDeCuenta() {
-        return numeroDeCuenta;
+    public void setNumeroCuentaDestino(String numeroCuentaDestino) {
+        this.numeroCuentaDestino = numeroCuentaDestino;
     }
 
-    public double getSaldoEmisor() {
-        return saldoEmisor;
+    public String getNumeroCuentaEmisora() {
+        return numeroCuentaEmisora;
     }
 
-    public void setSaldoEmisor(double saldoEmisor) {
-        this.saldoEmisor = saldoEmisor;
-    }
-
-    public double getSaldoDestino() {
-        return saldoDestino;
-    }
-
-    public void setSaldoDestino(double saldoDestino) {
-        this.saldoDestino = saldoDestino;
+    public void setNumeroCuentaEmisora(String numeroCuentaEmisora) {
+        this.numeroCuentaEmisora = numeroCuentaEmisora;
     }
 
     public String getConcepto() {
         return concepto;
     }
 
+    public void setConcepto(String concepto) {
+        this.concepto = concepto;
+    }
+
     public double getMonto() {
         return monto;
+    }
+
+    public void setMonto(double monto) {
+        this.monto = monto;
     }
     
 }
