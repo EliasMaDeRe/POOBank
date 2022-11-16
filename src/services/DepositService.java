@@ -4,11 +4,6 @@ import models.Deposito;
 import utilities.WrapperResponse;
 
 public class DepositService {
-    
-    // Agregar monto a una cuenta
-
-    // Necesito: Verificar si existe la cuenta
-    //           Agregar monto a la cuenta
 
     private Cuenta cuenta = new Cuenta();
 
