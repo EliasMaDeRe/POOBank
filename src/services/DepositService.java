@@ -16,17 +16,31 @@ public class DepositService {
 
     public WrapperResponse<DepositResponseDTO> Deposit(DepositRequestDTO deposito) {
 
-        if (cuenta.findUserByAccountNumber(deposito.getnumeroDeCuenta().isPresent())) {
+        Boolean ok;
+
+        String mensaje;
+
+        DepositResponseDTO depositResponse;
+        
+        if (cuenta.findAccountByAccountNumber(deposito.getnumeroDeCuenta().isPresent())) {
 			
             cuenta.getNumeroDeCuenta().setSaldo() = deposito.getSaldo() + deposito.getMonto();
 
-            return new WrapperResponse<DepositResponseDTO>(true, "El depósito se realizó con éxito.", new DepositResponseDTO(new TransactionDTO(deposito.getnumeroDeCuenta()), deposito.getSaldo(), deposito.getMonto()));
+            ok = true;
+
+            mensaje = "El depósito se realizó con éxito.";
+
+            depositResponse =  new DepositResponseDTO(new TransactionDTO(deposito.getnumeroDeCuenta()), deposito.getSaldo(), deposito.getMonto());
 
 		} else {
 
-            return new WrapperResponse<DepositResponseDTO>(false, "El número de cuenta no existe.", null);
-        }
-    }
+            ok = false;
 
-    private Deposito deposito = new Deposito();
+            mensaje = "El número de cuenta no existe.";
+
+            depositResponse = null;
+        }
+
+        return new WrapperResponse<DepositResponseDTO>(ok, mensaje, depositResponse);
+    }
 }
