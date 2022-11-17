@@ -18,19 +18,19 @@ public class DepositService {
 
         DepositResponseDTO depositResponse;
 
-        Optional<Cuenta> cuentaOptional = cuentaMetodos.findAccountByAccountNumber(deposito.getnumeroDeCuenta());
+        Optional<Cuenta> cuentaOptional = cuentaMetodos.findAccountByAccountNumber(deposito.getNumeroDeCuenta());
         
         if (cuentaOptional.isPresent()) {
 
             Cuenta cuenta = cuentaOptional.get();
 			
-            cuenta.setSaldo(deposito.getSaldo() + deposito.getMonto());
+            cuenta.setSaldo(cuenta.getSaldo() + deposito.getMonto());
 
             ok = true;
 
             mensaje = "El depósito se realizó con éxito.";
 
-            depositResponse =  new DepositResponseDTO(new TransactionDTO(deposito.getnumeroDeCuenta()), deposito.getSaldo(), deposito.getMonto());
+            depositResponse = new DepositResponseDTO(new Deposit_WithdrawalDTO(deposito.getNumeroDeCuenta(),deposito.getMonto()), true);
 
 		} else {
 
