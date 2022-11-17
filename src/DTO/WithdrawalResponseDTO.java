@@ -2,29 +2,29 @@ package DTO;
 
 public class WithdrawalResponseDTO {
     
-    private UserDTO user;
-	private String token;
+    private Deposit_WithdrawalDTO transaction;
+	private Boolean verificador;
 
     public WithdrawalResponseDTO() {} //constructor vacio
 
-    public WithdrawalResponseDTO(UserDTO user, String token) {
-		this.user = user;
-		this.token = token;
+    public WithdrawalResponseDTO(Deposit_WithdrawalDTO transaction, Boolean verificador) {
+		this.transaction = transaction;
 	}
 	
-	public UserDTO getUserDTO(){
-		return this.user;
+	public Deposit_WithdrawalDTO getTransactionDTO(){
+		return this.transaction;
 	}
 
-	public void setUserDTO(UserDTO user){
-		this.user = user;
+	public void setTransactionDTO(Deposit_WithdrawalDTO transaction){
+		this.transaction = transaction;
 	}
 
-	public String getToken(){
-		return this.token;
+	public Boolean getToken(){
+		return this.verificador;
 	}
-    
-	public void setToken(String token){
-		this.token = token;
+
+	public void setToken(Boolean verificador){
+		this.verificador = verificador;
 	}
+
 }

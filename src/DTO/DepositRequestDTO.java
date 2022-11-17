@@ -3,8 +3,8 @@ package DTO;
 public class DepositRequestDTO {
     
     private String numeroDeCuenta;
-    private double monto; 
-    
+    private double monto;
+
     public DepositRequestDTO() {}
 
 	public DepositRequestDTO(String numeroDeCuenta, double monto) {
@@ -12,11 +12,11 @@ public class DepositRequestDTO {
         this.monto = monto;
 	}
 
-    public String numeroDeCuenta() {
+    public String getNumeroDeCuenta() {
 		return numeroDeCuenta;
 	}
 
-	public void numeroDeCuenta(String numeroDeCuenta) {
+	public void setNumeroDeCuenta(String numeroDeCuenta) {
 		this.numeroDeCuenta = numeroDeCuenta;
 	}
     
