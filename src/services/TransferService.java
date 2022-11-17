@@ -1,5 +1,7 @@
 package services;
 
+import java.util.Optional;
+
 import DTO.*;
 import models.Cuenta;
 import models.Transferencia;
@@ -11,16 +13,21 @@ public class TransferService {
 	
     public WrapperResponse<Transferencia> transfer(TransferRequestDTO transfer){
 
-		cuentaEmisora = cuenta.findAccountByAccountNumber(transfer.getNumeroCuentaEmisora());
-		cuentaReceptora = cuenta.findAccountByAccountNumber(transfer.getNumeroCuentaDestino());
+		Optional <Cuenta> cuentaEmisoraOptional = cuenta.findAccountByAccountNumber(transfer.getNumeroCuentaEmisora());
+		Optional <Cuenta> cuentaReceptoraOptional = cuenta.findAccountByAccountNumber(transfer.getNumeroCuentaDestino());
 
-		boolean ok;
+		boolean ok = false;
 		String mensaje;
+
 
 		Transferencia transferencia = new Transferencia(transfer.getNumeroCuentaEmisora(), transfer.getNumeroCuentaDestino(), transfer.getMonto(), transfer.getConcepto());
 
-        if ((cuentaEmisora.isPresent())){ //Checa si existe la cuenta emisora
-			if ((cuentaReceptora.isPresent())){	//Checa si existe ela cuenta receptora
+        if ((cuentaEmisoraOptional.isPresent())){ //Checa si existe la cuenta emisora
+			if ((cuentaReceptoraOptional.isPresent())){	//Checa si existe ela cuenta receptora
+
+				cuentaEmisora = cuentaEmisoraOptional.get();
+				cuentaReceptora =  cuentaReceptoraOptional.get();
+
 				if(cuentaEmisora.getSaldo()>=transfer.getMonto()){	//Checa si tiene suficiente dinero la emisora					
 					cuentaEmisora.setSaldo(sustraerMonto(transfer.getMonto(), cuentaEmisora.getSaldo()));
 					cuentaReceptora.setSaldo(agregarMonto(transfer.getMonto(), cuentaReceptora.getSaldo()));
@@ -28,15 +35,12 @@ public class TransferService {
 					ok = true;
 					mensaje = "Transferencia exitosa";
 				} else {
-					ok = false;
 					mensaje = "No se pudo sustraer el monto de la cuenta emisora";
 				}
 			} else {
-				ok = false;
 				mensaje = "La cuenta receptora no existe";
 			}
         } else {
-			ok = false;
 			mensaje = "La cuenta emisora no existe";
 		}
 
@@ -54,6 +58,7 @@ public class TransferService {
 
 	// POR IMPLEMENTAR EN Cuenta: 
 
+	// Constructor vacio
 	// Optional<Cuenta> findAccountByAccountNumber(String numeroDeCuenta)
 	// void setSaldo(double saldo)
 
