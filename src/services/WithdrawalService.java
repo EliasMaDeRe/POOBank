@@ -17,10 +17,10 @@ public class WithdrawalService {
 
         boolean ok = false;
         String mensaje;
-        WithdrawalResponseDTO withRequest;
+        WithdrawalResponseDTO withResponse;
 
 
-        Optional<Cuenta> cuentaOptional = cuentaMetodos.findAccountByAccountNumber(retiro.getnumeroDeCuenta());
+        Optional<Cuenta> cuentaOptional = cuentaMetodos.findAccountByAccountNumber(retiro.getNumeroDeCuenta());
 
         if(cuentaOptional.isPresent()){
 
@@ -31,18 +31,18 @@ public class WithdrawalService {
                 cuenta.setSaldo(cuenta.getSaldo()-retiro.getMonto());
                 ok = true;
                 mensaje = "El retiro se realizó con éxito";
-                withRequest = new WithdrawalResponseDTO(new TransactionDTO(retiro.getnumeroDeCuenta()), retiro.getSaldo(), retiro.getMonto());
+                withResponse = new WithdrawalResponseDTO(new Deposit_WithdrawalDTO(retiro.getNumeroDeCuenta(),retiro.getMonto()), true);
 
             }else{
                 mensaje = "No hay saldo suficiente para lo que se desea retirar";
-                withRequest = null;
+                withResponse = null;
             }
         } else{
             mensaje = "El número de cuenta no existe";
-            withRequest = null;
+            withResponse = null;
         }
 
-        return new WrapperResponse<WithdrawalResponseDTO>(ok, mensaje, withRequest);
+        return new WrapperResponse<WithdrawalResponseDTO>(ok, mensaje, withResponse);
 
     }
 
