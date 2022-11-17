@@ -25,8 +25,8 @@ public class TransferService {
         if ((cuentaEmisoraOptional.isPresent())){ //Checa si existe la cuenta emisora
 			if ((cuentaReceptoraOptional.isPresent())){	//Checa si existe ela cuenta receptora
 
-				cuentaEmisora = cuentaEmisoraOptional.get();
-				cuentaReceptora =  cuentaReceptoraOptional.get();
+				Cuenta cuentaEmisora = cuentaEmisoraOptional.get();
+				Cuenta cuentaReceptora =  cuentaReceptoraOptional.get();
 
 				if(cuentaEmisora.getSaldo()>=transfer.getMonto()){	//Checa si tiene suficiente dinero la emisora					
 					cuentaEmisora.setSaldo(sustraerMonto(transfer.getMonto(), cuentaEmisora.getSaldo()));
