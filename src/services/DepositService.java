@@ -1,25 +1,30 @@
 package services;
+import java.util.Optional;
 import DTO.*;
-import models.*;
+import models.Cuenta;
 import utilities.WrapperResponse;
 
 public class DepositService {
 
-    private Cuenta cuenta = new Cuenta();
+    private Cuenta cuentaMetodos = new Cuenta();
 
     public DepositService() {}
 
     public WrapperResponse<DepositResponseDTO> Deposit(DepositRequestDTO deposito) {
 
-        Boolean ok;
+        Boolean ok = false;
 
         String mensaje;
 
         DepositResponseDTO depositResponse;
+
+        Optional<Cuenta> cuentaOptional = cuentaMetodos.findAccountByAccountNumber(deposito.getnumeroDeCuenta());
         
-        if (cuenta.findAccountByAccountNumber(deposito.getnumeroDeCuenta().isPresent())) {
+        if (cuentaOptional.isPresent()) {
+
+            Cuenta cuenta = cuentaOptional.get();
 			
-            cuenta.getNumeroDeCuenta().setSaldo() = deposito.getSaldo() + deposito.getMonto();
+            cuenta.setSaldo(deposito.getSaldo() + deposito.getMonto());
 
             ok = true;
 
