@@ -12,11 +12,11 @@ public class WithdrawalRequestDTO {
         this.monto = monto;
 	}
 
-    public String numeroDeCuenta() {
-		return numeroDeCuenta;
+    public String getNumeroDeCuenta() {
+		return this.numeroDeCuenta;
 	}
 
-	public void numeroDeCuenta(String numeroDeCuenta) {
+	public void setNnumeroDeCuenta(String numeroDeCuenta) {
 		this.numeroDeCuenta = numeroDeCuenta;
 	}
     
