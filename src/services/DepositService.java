@@ -1,6 +1,6 @@
 package services;
 import DTO.*;
-import models.Deposito;
+import models.*;
 import utilities.WrapperResponse;
 
 public class DepositService {
