@@ -6,7 +6,7 @@ import utilities.WrapperResponse;
 
 public class AuthService {
 
-	private UserModel userModel = new UserModel();
+	private UserModel userModel = new UserModel(); // MODELO DE USUARIO -> MODELO DE CLIENTE
 
 	public AuthService() {}
 
@@ -21,7 +21,7 @@ public class AuthService {
 			return new WrapperResponse<LoginResponseDTO>(false,"Contraseña incorrecta",null);
 
 		}
-		String token = "123"; // generar token
+		String token = "123"; // generar token // METOODO GENERAR ID
 		userModel.findUserByUsername(user.getUsername()).get().setToken(token); // guardar token (falta implementar)
 		return new WrapperResponse<LoginResponseDTO>(true, "Inicio de sesión correcto.", new LoginResponseDTO(new UserDTO(user.getUsername()),token));
 	}
