@@ -30,7 +30,7 @@ public class TransferService {
 
 				if(cuentaEmisora.getSaldo()>=transfer.getMonto()){	//Checa si tiene suficiente dinero la emisora					
 					cuentaEmisora.setSaldo(sustraerMonto(transfer.getMonto(), cuentaEmisora.getSaldo()));
-					cuentaReceptora.setSaldo(agregarMonto(transfer.getMonto(), cuentaReceptora.getSaldo()));
+					cuentaReceptora.setSaldo(agregarMonto(transfer.getMonto(), cuentaReceptora.getSaldo())); // GUARDAR MODELO DESPUES DE MODIFICARLO
 
 					ok = true;
 					mensaje = "Transferencia exitosa";
@@ -44,7 +44,7 @@ public class TransferService {
 			mensaje = "La cuenta emisora no existe";
 		}
 
-		return new WrapperResponse<Transferencia>(ok, mensaje, transferencia);
+		return new WrapperResponse<Transferencia>(ok, mensaje, transferencia); // GUARDAR TRANSFERENCIA EN LA BASE DE DATOS
 
     }
 
