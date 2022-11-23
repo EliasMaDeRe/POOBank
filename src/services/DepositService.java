@@ -18,13 +18,15 @@ public class DepositService {
 
         DepositResponseDTO depositResponse;
 
+	// GENERAR DEPOSITO Y GUARDARLO    
+	
         Optional<Cuenta> cuentaOptional = cuentaMetodos.findAccountByAccountNumber(deposito.getNumeroDeCuenta());
         
         if (cuentaOptional.isPresent()) {
 
             Cuenta cuenta = cuentaOptional.get();
 			
-            cuenta.setSaldo(cuenta.getSaldo() + deposito.getMonto());
+            cuenta.setSaldo(cuenta.getSaldo() + deposito.getMonto()); // GUARDAR MODELO DESPUES DE EDITAR
 
             ok = true;
 
