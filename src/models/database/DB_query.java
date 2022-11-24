@@ -572,9 +572,9 @@ public class DB_query {
         }
 
         //Generamos el deposito en estas 3 lineas
-        saldo = ConsultaSaldo(numeroDeCuenta);
-        nuevoSaldo = saldo + monto;
-        paso = ActualizarCuenta(numeroDeCuenta, nuevoSaldo);
+        //saldo = ConsultaSaldo(numeroDeCuenta);
+        //nuevoSaldo = saldo + monto;
+        //paso = ActualizarCuenta(numeroDeCuenta, nuevoSaldo);
 
         return paso;
     }
@@ -635,13 +635,14 @@ public class DB_query {
         
         } catch (Exception e) {
             paso = false;
+            // implementar estado si paso o no.
             //System.out.println("El registro no funciono correctamente");
             //e.printStackTrace();
         }
 
-        saldo = ConsultaSaldo(numeroDeCuenta);
-        nuevoSaldo = saldo - monto;
-        paso = ActualizarCuenta(numeroDeCuenta, nuevoSaldo);
+        //saldo = ConsultaSaldo(numeroDeCuenta);
+        //nuevoSaldo = saldo - monto;
+        //paso = ActualizarCuenta(numeroDeCuenta, nuevoSaldo);
 
         return paso;
     }
@@ -706,10 +707,10 @@ public class DB_query {
         }
 
         //Se genera la transferencia
-        saldoEmisor = ConsultaSaldo(cuentaEmisora);
-        saldoDestino = ConsultaSaldo(cuentaDestino);
-        nuevoSaldoEmisor = saldoEmisor - monto;
-        nuevoSaldoDestino = saldoDestino + monto;
+        //saldoEmisor = ConsultaSaldo(cuentaEmisora);
+        //saldoDestino = ConsultaSaldo(cuentaDestino);
+        //nuevoSaldoEmisor = saldoEmisor - monto;
+        //nuevoSaldoDestino = saldoDestino + monto;
 
         //Verificamos que se realizo correctamente
         if(ActualizarCuenta(cuentaEmisora, nuevoSaldoEmisor) && ActualizarCuenta(cuentaDestino, nuevoSaldoDestino) ){
