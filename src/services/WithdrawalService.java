@@ -18,6 +18,8 @@ public class WithdrawalService {
         boolean ok = false;
         String mensaje;
         WithdrawalResponseDTO withResponse;
+        
+        // GENERAR RETIRO Y GUARDARLO
 
 
         Optional<Cuenta> cuentaOptional = cuentaMetodos.findAccountByAccountNumber(retiro.getNumeroDeCuenta());
