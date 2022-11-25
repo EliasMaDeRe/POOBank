@@ -41,7 +41,7 @@ public class DepositService {
 
             Cuenta cuenta = new Deposito(deposito.getNumeroDeCuenta(), deposito.getMonto());
 			
-            cuenta.setSaldo(cuenta.getSaldo() + deposito.getMonto());
+            cuenta.setSaldo(cuenta.getSaldo() + deposito.getMonto()); // GUARDAR MODELO DESPUES DE EDITAR
 
             cuenta.saveCuenta();
 
