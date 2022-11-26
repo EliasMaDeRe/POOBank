@@ -18,7 +18,7 @@ public class AuthController {
 	// Todos los controladores deben retornar este tipo de dato (WrapperResponse) para tener estandarizadas las respuestas).
 	// El controlador retorna la llamada al método del servicio y el servicio es el encargado de responder el WrapperResponse
 
-	public WrapperResponse<LoginResponseDTO> login(LoginRequestDTO user) {
-		return authService.login(user);
-	}
+	//public WrapperResponse<LoginResponseDTO> login(LoginRequestDTO user) {
+		// return authService.login(user);
+	// }
 }

@@ -1,12 +1,12 @@
 package services;
 
 import DTO.*;
-import models.UserModel;
+// import models.UserModel;
 import utilities.WrapperResponse;
 
 public class AuthService {
 
-	private UserModel userModel = new UserModel();
+	/*private UserModel userModel = new UserModel();
 
 	public AuthService() {}
 
@@ -18,5 +18,5 @@ public class AuthService {
 		}
 
 		return new WrapperResponse<>(true, "Inicio de sesión correcto.", null);
-	}
+	}*/
 }
