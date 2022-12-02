@@ -6,12 +6,29 @@ import DTO.*;
 import models.Cuenta;
 import models.Transferencia;
 import utilities.WrapperResponse;
+
+/**
+* TransferService es una clase utilizada como servicio para realizar una transferencia entre dos cuentas existentes en el banco
+
+@author Carlos May
+
+*/
 public class TransferService {
 
 	
 	Cuenta cuenta = new Cuenta();
+
+	/**
+	 * Método que realiza la transferencia, modifica los saldos de las cuentas y crea la transferencia, si alguna cuenta no existe o 
+	 no tiene los fondos suficientes devuelve un WrapperResponse con un mensaje predeterminado, además de un booleano que define 
+	 el estado de la operación
+
+	 * @param transfer Objeto de TransferRequestDTO con la información del número de cuenta emisora, receptora, el monto y el concepto de
+	 la transferencia
+	 * @return Devuelve WrapperResponse con un booleano definiendo el estado de la operación y un mensaje describiendo la situación
+	 */
 	
-    public WrapperResponse<Transferencia> transfer(TransferRequestDTO transfer){
+    public WrapperResponse<Boolean> transfer(TransferRequestDTO transfer){
 
 		Optional <Cuenta> cuentaEmisoraOptional = cuenta.findAccountByAccountNumber(transfer.getNumeroCuentaEmisora());
 		Optional <Cuenta> cuentaReceptoraOptional = cuenta.findAccountByAccountNumber(transfer.getNumeroCuentaDestino());
@@ -21,16 +38,20 @@ public class TransferService {
 
 
 		Transferencia transferencia = new Transferencia(transfer.getNumeroCuentaEmisora(), transfer.getNumeroCuentaDestino(), transfer.getMonto(), transfer.getConcepto());
+		transferencia.saveTransferencia();
 
-        if ((cuentaEmisoraOptional.isPresent())){ //Checa si existe la cuenta emisora
-			if ((cuentaReceptoraOptional.isPresent())){	//Checa si existe ela cuenta receptora
+        if ((cuentaEmisoraOptional.isPresent())){
+			if ((cuentaReceptoraOptional.isPresent())){
 
 				Cuenta cuentaEmisora = cuentaEmisoraOptional.get();
 				Cuenta cuentaReceptora =  cuentaReceptoraOptional.get();
 
-				if(cuentaEmisora.getSaldo()>=transfer.getMonto()){	//Checa si tiene suficiente dinero la emisora					
-					cuentaEmisora.setSaldo(sustraerMonto(transfer.getMonto(), cuentaEmisora.getSaldo()));
-					cuentaReceptora.setSaldo(agregarMonto(transfer.getMonto(), cuentaReceptora.getSaldo())); // GUARDAR MODELO DESPUES DE MODIFICARLO
+				if(cuentaEmisora.getSaldo()>=transfer.getMonto()){			
+					cuentaEmisora.setSaldo(cuentaEmisora.getSaldo()-transfer.getMonto());
+					cuentaReceptora.setSaldo(cuentaReceptora.getSaldo()+transfer.getMonto());
+
+					cuentaEmisora.saveCuenta();
+					cuentaReceptora.saveCuenta();
 
 					ok = true;
 					mensaje = "Transferencia exitosa";
@@ -44,22 +65,19 @@ public class TransferService {
 			mensaje = "La cuenta emisora no existe";
 		}
 
-		return new WrapperResponse<Transferencia>(ok, mensaje, transferencia); // GUARDAR TRANSFERENCIA EN LA BASE DE DATOS
+		return new WrapperResponse<Boolean>(ok, mensaje, null);
 
     }
-
-	public double sustraerMonto(double monto, double saldo){
-		return saldo-monto;	
-	}
-
-	public double agregarMonto (double monto, double saldo){
-		return saldo+monto;
-	}
 
 	// POR IMPLEMENTAR EN Cuenta: 
 
 	// Constructor vacio
 	// Optional<Cuenta> findAccountByAccountNumber(String numeroDeCuenta)
 	// void setSaldo(double saldo)
+	// void saveCuenta () Para guardar el objeto de la cuenta
+
+	//POR IMPLEMENTAR EN MODELO TRANSFERENCIA
+
+	// void saveTransferencia () Para guardar la transferencia
 
 }
