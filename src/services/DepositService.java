@@ -1,48 +1,62 @@
 package services;
+
 import java.util.Optional;
 import DTO.*;
+import models.Deposito;
 import models.Cuenta;
 import utilities.WrapperResponse;
+
+/**
+ * DepositService es una clase auxiliar donde se realiza un deposito a una cuenta que 
+ * se encuentre en el banco.
+ * 
+ * @author José Carlos Leo
+ */
 
 public class DepositService {
 
     private Cuenta cuentaMetodos = new Cuenta();
 
+    /** 
+     * Método donde se realiza el deposito a la cuenta, primero verifica si una cuenta es existente, si esto se cumple
+     * el deposito se realiza y se aumenta el monto que se depistó a la cuenta.
+     * 
+     * @param deposito Es un objeto creado de DepositRequestDTO con la información del número de cuenta y el monto que se
+     * depositará en la cuenta.
+     * 
+     * @return Devuelve un WrapperResponse con un booleano definiendo el estado de la operación y un mensaje describiendo
+     * dicha operación.
+     */
+
     public DepositService() {}
 
-    public WrapperResponse<DepositResponseDTO> Deposit(DepositRequestDTO deposito) {
+    public WrapperResponse<Boolean> Deposit(DepositRequestDTO deposito) {
 
         Boolean ok = false;
 
         String mensaje;
 
-        DepositResponseDTO depositResponse;
-
-	// GENERAR DEPOSITO Y GUARDARLO    
-	
         Optional<Cuenta> cuentaOptional = cuentaMetodos.findAccountByAccountNumber(deposito.getNumeroDeCuenta());
         
         if (cuentaOptional.isPresent()) {
 
-            Cuenta cuenta = cuentaOptional.get();
+            Deposito depoist = new Deposito(deposito.getNumeroDeCuenta(), deposito.getMonto());
 			
-            cuenta.setSaldo(cuenta.getSaldo() + deposito.getMonto()); // GUARDAR MODELO DESPUES DE EDITAR
+            cuentaOptional.get().setSaldo(cuentaOptional.get().getSaldo() + deposito.getMonto()); // GUARDAR MODELO DESPUES DE EDITAR
+
+            cuentaOptional.get().saveCuenta();
 
             ok = true;
 
             mensaje = "El depósito se realizó con éxito.";
 
-            depositResponse = new DepositResponseDTO(new Deposit_WithdrawalDTO(deposito.getNumeroDeCuenta(),deposito.getMonto()), true);
+            deposit.saveDeposit();
 
 		} else {
 
-            ok = false;
-
             mensaje = "El número de cuenta no existe.";
-
-            depositResponse = null;
         }
 
-        return new WrapperResponse<DepositResponseDTO>(ok, mensaje, depositResponse);
+        return new WrapperResponse<Boolean>(ok, mensaje, null);
     }
 }

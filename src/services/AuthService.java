@@ -1,45 +1,68 @@
 package services;
 
 import DTO.*;
-import models.UserModel;
+import models.Cliente;
 import utilities.WrapperResponse;
+import utilities.Utileria;
+
+/**
+ * WithdrawalService es una clase auxiliar donde realizan los servicios de login y logout de clientes.
+ * 
+ * @author Elías Madera
+ * */
 
 public class AuthService {
 
-	private UserModel userModel = new UserModel(); // MODELO DE USUARIO -> MODELO DE CLIENTE
+	private Cliente cliente = new Cliente(); 
 
 	public AuthService() {}
 
+	    /** Método donde se realiza el  login dado un usuario y contraseña. Se verifica la existencia del usuario con ese username
+	 * y que la contraseña le pertenezca. Si el login es exitoso se guarda un token en el cliente para posterior guardarse en la
+	 * base de datos.
+     * 
+     * @param retiro LoginRequestDTO que contiene los atributos de username y password con el que se pretende hacer login.
+     * 
+     * @return Devuelve un WrapperResponse con un body null.
+     */
+
 	public WrapperResponse<LoginResponseDTO> login(LoginRequestDTO user) {
 
-		if (!(userModel.findUserByUsername(user.getUsername()).isPresent())) { // No Existe el usuario
+		if (!(Cliente.findClientByUsername(user.getUsername()).isPresent())) { // No Existe el usuario
 			
 			return new WrapperResponse<LoginResponseDTO>(false, "No existe el usuario.", null);
 		}
-		if (userModel.findUserByUsername(user.getUsername()).get().getPassword() != user.getPassword()){ // La contraseña no es correcta
+		if (cliente.findClientByUsername(user.getUsername()).get().getPassword() != user.getPassword()){ // La contraseña no es correcta
 
 			return new WrapperResponse<LoginResponseDTO>(false,"Contraseña incorrecta",null);
 
 		}
-		String token = "123"; // generar token // METOODO GENERAR ID
-		userModel.findUserByUsername(user.getUsername()).get().setToken(token); // guardar token (falta implementar)
+		String token = Utileria.generarId(); // generar token 
+		cliente.findClientByUsername(user.getUsername()).get().setToken(token); // guardar token 
+		cliente.saveCliente();
 		return new WrapperResponse<LoginResponseDTO>(true, "Inicio de sesión correcto.", new LoginResponseDTO(new UserDTO(user.getUsername()),token));
 	}
 
+		/** Método donde se realiza el  logout dado un token. Se verifica la existencia del usuario con ese token.
+	 * Si el logout es exitoso se borra el token en el cliente para posterior actualizarse en la
+	 * base de datos.
+     * 
+     * @param retiro LoginRequestDTO que contiene los atributos de username y password con el que se pretende hacer login.
+     * 
+     * @return Devuelve un WrapperResponse con un body true or false.
+     */
+
 	public WrapperResponse<Boolean> logout(LogoutRequestDTO user){
 
-		if(!userModel.findUserByToken(user.getToken()).isPresent()){ // Verifica el token existe
+		if(!cliente.findClientByToken(user.getToken()).isPresent()){ // Verifica el token existe
 
-			return new WrapperResponse<Boolean>(true, "Cierre de sesión incorrecto", true);
+			return new WrapperResponse<Boolean>(false, "Cierre de sesión incorrecto", true);
 
 		}
-		userModel.findUserByToken(user.getToken()).get().setToken(null); // remueve el token				
+		cliente.findClientByToken(user.getToken()).get().setToken(null); // remueve el token				
 		return new WrapperResponse<Boolean>(true, "Cierre de sesión correcto", true);
 
 	} 
 
-	// POR IMPLEMENTAR EN USER MODEL: 
 
-	// Optional<UserModel> findUserByToken(String token)
-	// void	setToken(String token)
 }
