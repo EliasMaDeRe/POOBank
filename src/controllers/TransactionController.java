@@ -7,7 +7,7 @@ import utilities.WrapperResponse;
 
 /**
  * TransactionController es una clase que se encarga de controlar el flujo de información 
- * entre la vista y los servicios
+ * entre la vista y los servicios de transacciones.
  * @author Fernando Joachín Prieto 
  */
 

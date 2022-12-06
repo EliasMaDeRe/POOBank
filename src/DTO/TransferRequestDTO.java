@@ -1,7 +1,7 @@
 package DTO;
 /**
- * TransferRequestDTO es una clase auxiliar la cual contiene la información de la tabla de
- * transacciones de la base de datos, especificamente contiene la informacion de las transferencias.
+ * TransferRequestDTO es una clase auxiliar la cual contiene la información necesaria
+ * para hacer una transferencia.
  * @author Fernando Joachín Prieto 
  */
 
