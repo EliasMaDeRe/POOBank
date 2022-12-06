@@ -69,15 +69,6 @@ public class TransferService {
 
     }
 
-	// POR IMPLEMENTAR EN Cuenta: 
 
-	// Constructor vacio
-	// Optional<Cuenta> findAccountByAccountNumber(String numeroDeCuenta)
-	// void setSaldo(double saldo)
-	// void saveCuenta () Para guardar el objeto de la cuenta
-
-	//POR IMPLEMENTAR EN MODELO TRANSFERENCIA
-
-	// void saveTransferencia () Para guardar la transferencia
 
 }
