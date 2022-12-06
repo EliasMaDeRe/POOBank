@@ -2,6 +2,7 @@ package services;
 
 import java.util.Optional;
 import DTO.*;
+import models.Deposito;
 import models.Cuenta;
 import utilities.WrapperResponse;
 
@@ -39,11 +40,11 @@ public class DepositService {
         
         if (cuentaOptional.isPresent()) {
 
-            Cuenta cuenta = new Deposito(deposito.getNumeroDeCuenta(), deposito.getMonto());
+            Deposito depoist = new Deposito(deposito.getNumeroDeCuenta(), deposito.getMonto());
 			
-            cuenta.setSaldo(cuenta.getSaldo() + deposito.getMonto()); // GUARDAR MODELO DESPUES DE EDITAR
+            cuentaOptional.get().setSaldo(cuentaOptional.get().getSaldo() + deposito.getMonto()); // GUARDAR MODELO DESPUES DE EDITAR
 
-            cuenta.saveCuenta();
+            cuentaOptional.get().saveCuenta();
 
             ok = true;
 

@@ -33,6 +33,8 @@ public class WithdrawalService {
         boolean ok = false;
         String mensaje;
         
+        Retiro withdrawal = new Retiro(retiro.getNumeroDeCuenta(), retiro.getMonto());
+        withdrawal.saveRetiro();
     
         Optional<Cuenta> cuentaOptional = cuentaMetodos.findAccountByAccountNumber(retiro.getNumeroDeCuenta());
 
@@ -42,13 +44,11 @@ public class WithdrawalService {
 
             if(cuenta.getSaldo() >= retiro.getMonto()){
 
-                Retiro withdrawal = new Retiro(retiro.getNumeroDeCuenta(), retiro.getMonto());
                 cuenta.setSaldo(cuenta.getSaldo()-retiro.getMonto());
                 cuenta.saveCuenta();
 
                 ok = true;
                 mensaje = "El retiro se realizó con éxito";
-                withdrawal.saveWithdrawal();
                   
             }else{
                 mensaje = "No hay saldo suficiente para lo que se desea retirar";
