@@ -6,8 +6,8 @@ package DTO;
  */
 
 public class TransferRequestDTO {
-    private String numeroCuentaDestino;
-    private String numeroCuentaEmisora;
+    private int numeroCuentaDestino;
+    private int numeroCuentaEmisora;
     private String concepto;
     private double monto;
 
@@ -23,7 +23,7 @@ public class TransferRequestDTO {
      * @param concepto Es la descripción de la transferencia que se realizo.
      * @param monto Es la cantidad de dinero que se va a trasladar de la cuenta emisora a la cuenta destino.
      */
-	public TransferRequestDTO(String numeroCuentaDestino, String numeroCuentaEmisora, String concepto, double monto) {
+	public TransferRequestDTO(int numeroCuentaDestino, int numeroCuentaEmisora, String concepto, double monto) {
 		this.numeroCuentaDestino = numeroCuentaDestino;   
         this.numeroCuentaEmisora = numeroCuentaEmisora;
         this.concepto = concepto;
@@ -34,7 +34,7 @@ public class TransferRequestDTO {
      * Método que devuelve el número de la cuenta que recibe el traslado de los fondos de la cuenta emisora.
      * @return Devuelve el número de la cuenta destino.
      */
-    public String getNumeroCuentaDestino() {
+    public int getNumeroCuentaDestino() {
         return numeroCuentaDestino;
     }
 
@@ -42,7 +42,7 @@ public class TransferRequestDTO {
      * Método que cambia el número de la cuenta que recibe el traslado de los fondos de la cuenta emisora.
      * @param numeroCuentaDestino Es el número de la cuenta destino.
      */
-    public void setNumeroCuentaDestino(String numeroCuentaDestino) {
+    public void setNumeroCuentaDestino(int numeroCuentaDestino) {
         this.numeroCuentaDestino = numeroCuentaDestino;
     }
 
@@ -50,7 +50,7 @@ public class TransferRequestDTO {
      * Método que devuelve el número de la cuenta que envia el traslado de fondos a la cuenta destino.
      * @return Devuelve el número de la cuenta emisora.
      */
-    public String getNumeroCuentaEmisora() {
+    public int getNumeroCuentaEmisora() {
         return numeroCuentaEmisora;
     }
 
@@ -58,7 +58,7 @@ public class TransferRequestDTO {
      * Método que cambia el número de la cuenta que envia el traslado de fondos a la cuenta destino.
      * @param numeroCuentaEmisora Es el número de la cuenta emisora
      */
-    public void setNumeroCuentaEmisora(String numeroCuentaEmisora) {
+    public void setNumeroCuentaEmisora(int numeroCuentaEmisora) {
         this.numeroCuentaEmisora = numeroCuentaEmisora;
     }
 

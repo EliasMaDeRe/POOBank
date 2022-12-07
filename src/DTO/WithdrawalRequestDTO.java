@@ -10,8 +10,9 @@ package DTO;
 
 public class WithdrawalRequestDTO {
     
-    private String numeroDeCuenta;
-    private double monto; 
+    private int numeroDeCuenta;
+    private double monto;
+	private String concepto;
 
 	/**
 	 * Constructor vacío que crea un DepositRequestDTO.
@@ -24,7 +25,7 @@ public class WithdrawalRequestDTO {
 	 * @param numeroDeCuenta Es el numero de la cuenta al cual se le retiraran los fondos.
 	 * @param monto Es la cantidad de dinero que se va a retirar de la cuenta. 
 	 */
-	public WithdrawalRequestDTO(String numeroDeCuenta, double monto) {
+	public WithdrawalRequestDTO(int numeroDeCuenta, double monto) {
         this.numeroDeCuenta = numeroDeCuenta;
         this.monto = monto;
 	}
@@ -33,7 +34,7 @@ public class WithdrawalRequestDTO {
 	 * Método que retorna el número de cuenta en la que se esta realizando el retiro.
 	 * @return devuelve el numero de la cuenta a la cual se le realiza el retiro. 
 	 */
-    public String getNumeroDeCuenta() {
+    public int getNumeroDeCuenta() {
 		return this.numeroDeCuenta;
 	}
 
@@ -41,7 +42,7 @@ public class WithdrawalRequestDTO {
 	 * Método que cambia el número de cuenta donde se realiza el retiro. 
 	 * @param numeroDeCuenta recibe el nuevo número de cuenta en la cual se realizará el retiro.
 	 */
-	public void setNnumeroDeCuenta(String numeroDeCuenta) {
+	public void setNnumeroDeCuenta(int numeroDeCuenta) {
 		this.numeroDeCuenta = numeroDeCuenta;
 	}
     
@@ -59,6 +60,18 @@ public class WithdrawalRequestDTO {
 	 */
 	public void setMonto(float monto) {
 		this.monto = monto;
+	}
+
+	public void setConcepto(String concepto){
+
+		this.concepto = concepto;
+
+	}
+
+	public String getConcepto(){
+
+		return this.concepto;
+
 	}
 
 }

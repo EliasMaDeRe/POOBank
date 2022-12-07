@@ -10,8 +10,9 @@ package DTO;
 
 public class DepositRequestDTO {
     
-    private String numeroDeCuenta;
+    private int numeroDeCuenta;
     private double monto;
+	private String Concepto;
 
 	/**
 	 * Constructor vacío que crea un DepositRequestDTO.
@@ -24,16 +25,17 @@ public class DepositRequestDTO {
 	 * @param numeroDeCuenta Es el numero de la cuenta que recibirá los fondos.
 	 * @param monto Es la cantidad de dinero que se va a depositar a la cuenta. 
 	 */
-	public DepositRequestDTO(String numeroDeCuenta, double monto) {
+	public DepositRequestDTO(int numeroDeCuenta, double monto, String concepto) {
         this.numeroDeCuenta = numeroDeCuenta;
         this.monto = monto;
+		this.Concepto = concepto;
 	}
 
 	/**
 	 * Método que retorna el número de cuenta a la que se le esta realizando el depósito.
 	 * @return devuelve el numero de la cuenta a la cual se le realiza el depósito. 
 	 */
-    public String getNumeroDeCuenta() {
+    public int getNumeroDeCuenta() {
 		return numeroDeCuenta;
 	}
 
@@ -41,7 +43,7 @@ public class DepositRequestDTO {
 	 * Método que cambia el número de cuenta que realiza el deposito. 
 	 * @param numeroDeCuenta recibe el nuevo número de cuenta al cual se realizará el depósito.
 	 */
-	public void setNumeroDeCuenta(String numeroDeCuenta) {
+	public void setNumeroDeCuenta(int numeroDeCuenta) {
 		this.numeroDeCuenta = numeroDeCuenta;
 	}
     
@@ -59,6 +61,18 @@ public class DepositRequestDTO {
 	 */
 	public void setMonto(float monto) {
 		this.monto = monto;
+	}
+
+	public String getConcepto(){
+
+		return this.Concepto;
+
+	}
+	
+	public void setConcepto(String concepto){
+
+		this.Concepto = concepto;
+
 	}
 
 }

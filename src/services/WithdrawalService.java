@@ -4,6 +4,7 @@ import java.util.Optional;
 import DTO.*;
 import models.Cuenta;
 import models.Retiro;
+import models.database.DB_query;
 import utilities.WrapperResponse;
 
 /**
@@ -15,7 +16,7 @@ import utilities.WrapperResponse;
 
 public class WithdrawalService {
 
-    private Cuenta cuentaMetodos = new Cuenta();
+    private DB_query nube = new DB_query();
 
     /** Método donde se realiza el retiro de la cuenta, primero verifica si una cuenta es existente, si esto se cumple
      * verifica si el saldo que contiene la cuenta es suficiente al monto que se desea retirar, si cumple con ambos campos,
@@ -33,19 +34,17 @@ public class WithdrawalService {
         boolean ok = false;
         String mensaje;
         
-        Retiro withdrawal = new Retiro(retiro.getNumeroDeCuenta(), retiro.getMonto());
-        withdrawal.saveRetiro();
+        Retiro withdrawal = new Retiro(retiro.getNumeroDeCuenta(), retiro.getMonto(),retiro.getConcepto());
+        withdrawal.ActualizarRetiro(withdrawal);
     
-        Optional<Cuenta> cuentaOptional = cuentaMetodos.findAccountByAccountNumber(retiro.getNumeroDeCuenta());
+        Cuenta cuenta = nube.CuentaPorNumeroDeCuenta(retiro.getNumeroDeCuenta());
 
-        if(cuentaOptional.isPresent()){
+        if(cuenta != null){
 
-            Cuenta cuenta = cuentaOptional.get();
+            if(cuenta.getSaldo(retiro.getNumeroDeCuenta()) >= retiro.getMonto()){
 
-            if(cuenta.getSaldo() >= retiro.getMonto()){
-
-                cuenta.setSaldo(cuenta.getSaldo()-retiro.getMonto());
-                cuenta.saveCuenta();
+                cuenta.setSaldo(cuenta.getSaldo(retiro.getNumeroDeCuenta())-retiro.getMonto());
+                cuenta.ActualizarCuenta(cuenta);
 
                 ok = true;
                 mensaje = "El retiro se realizó con éxito";

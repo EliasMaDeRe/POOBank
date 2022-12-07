@@ -3,6 +3,7 @@ package services;
 import java.util.Optional;
 import DTO.*;
 import models.Deposito;
+import models.database.DB_query;
 import models.Cuenta;
 import utilities.WrapperResponse;
 
@@ -15,7 +16,7 @@ import utilities.WrapperResponse;
 
 public class DepositService {
 
-    private Cuenta cuentaMetodos = new Cuenta();
+    private DB_query nube = new DB_query();
 
     /** 
      * Método donde se realiza el deposito a la cuenta, primero verifica si una cuenta es existente, si esto se cumple
@@ -36,21 +37,20 @@ public class DepositService {
 
         String mensaje;
 
-        Optional<Cuenta> cuentaOptional = cuentaMetodos.findAccountByAccountNumber(deposito.getNumeroDeCuenta());
+        Deposito deposit = new Deposito(deposito.getNumeroDeCuenta(), deposito.getMonto(),deposito.getConcepto());
+        deposit.GuardarDeposito(deposit);
+
+        Cuenta cuenta = nube.CuentaPorNumeroDeCuenta(deposito.getNumeroDeCuenta());
         
-        if (cuentaOptional.isPresent()) {
-
-            Deposito depoist = new Deposito(deposito.getNumeroDeCuenta(), deposito.getMonto());
+        if (cuenta != null) {
 			
-            cuentaOptional.get().setSaldo(cuentaOptional.get().getSaldo() + deposito.getMonto()); // GUARDAR MODELO DESPUES DE EDITAR
+            cuenta.setSaldo(cuenta.getSaldo(deposito.getNumeroDeCuenta()) + deposito.getMonto()); // GUARDAR MODELO DESPUES DE EDITAR
 
-            cuentaOptional.get().saveCuenta();
+            cuenta.ActualizarCuenta(cuenta);
 
             ok = true;
 
             mensaje = "El depósito se realizó con éxito.";
-
-            deposit.saveDeposit();
 
 		} else {
 

@@ -2,6 +2,7 @@ package services;
 
 import DTO.*;
 import models.Cliente;
+import models.database.DB_query;
 import utilities.WrapperResponse;
 import utilities.Utileria;
 
@@ -12,7 +13,7 @@ import utilities.Utileria;
 
 public class AuthService {
 
-	private Cliente cliente = new Cliente(); 
+	private DB_query nube = new DB_query();
 
 	public AuthService() {}
 
@@ -27,18 +28,19 @@ public class AuthService {
 
 	public WrapperResponse<LoginResponseDTO> login(LoginRequestDTO user) {
 
-		if (!(Cliente.findClientByUsername(user.getUsername()).isPresent())) { // No Existe el usuario
+		if (nube.GetByUSERNAME(user.getUsername()) == null) { // No Existe el usuario
 			
 			return new WrapperResponse<LoginResponseDTO>(false, "No existe el usuario.", null);
 		}
-		if (cliente.findClientByUsername(user.getUsername()).get().getPassword() != user.getPassword()){ // La contraseña no es correcta
+		if (nube.GetByUSERNAME(user.getUsername()).getPassword() != user.getPassword()){ // La contraseña no es correcta
 
 			return new WrapperResponse<LoginResponseDTO>(false,"Contraseña incorrecta",null);
 
 		}
 		String token = Utileria.generarId(); // generar token 
-		cliente.findClientByUsername(user.getUsername()).get().setToken(token); // guardar token 
-		cliente.saveCliente();
+		Cliente cliente = nube.GetByUSERNAME(user.getUsername());
+		cliente.setToken(token); // guardar token 
+		nube.ActualizarCliente(cliente);
 		return new WrapperResponse<LoginResponseDTO>(true, "Inicio de sesión correcto.", new LoginResponseDTO(new UserDTO(user.getUsername()),token));
 	}
 
@@ -53,12 +55,14 @@ public class AuthService {
 
 	public WrapperResponse<Boolean> logout(LogoutRequestDTO user){
 
-		if(!cliente.findClientByToken(user.getToken()).isPresent()){ // Verifica el token existe
+		if(nube.GetByTOKEN(user.getToken()) != null){ // Verifica el token existe
 
 			return new WrapperResponse<Boolean>(false, "Cierre de sesión incorrecto", true);
 
 		}
-		cliente.findClientByToken(user.getToken()).get().setToken(null); // remueve el token				
+		Cliente cliente = nube.GetByTOKEN(user.getToken());
+		cliente.setToken(null); // remueve el token		
+		nube.ActualizarCliente(cliente);
 		return new WrapperResponse<Boolean>(true, "Cierre de sesión correcto", true);
 
 	} 

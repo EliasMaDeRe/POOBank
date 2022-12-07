@@ -5,6 +5,7 @@ import java.util.Optional;
 import DTO.*;
 import models.Cuenta;
 import models.Transferencia;
+import models.database.DB_query;
 import utilities.WrapperResponse;
 
 /**
@@ -16,7 +17,7 @@ import utilities.WrapperResponse;
 public class TransferService {
 
 	
-	Cuenta cuenta = new Cuenta();
+	DB_query nube = new DB_query();
 
 	/**
 	 * Método que realiza la transferencia, modifica los saldos de las cuentas y crea la transferencia, si alguna cuenta no existe o 
@@ -30,28 +31,25 @@ public class TransferService {
 	
     public WrapperResponse<Boolean> transfer(TransferRequestDTO transfer){
 
-		Optional <Cuenta> cuentaEmisoraOptional = cuenta.findAccountByAccountNumber(transfer.getNumeroCuentaEmisora());
-		Optional <Cuenta> cuentaReceptoraOptional = cuenta.findAccountByAccountNumber(transfer.getNumeroCuentaDestino());
+		Cuenta cuentaEmisora = nube.CuentaPorNumeroDeCuenta(transfer.getNumeroCuentaEmisora());
+		Cuenta cuentaReceptora = nube.CuentaPorNumeroDeCuenta(transfer.getNumeroCuentaDestino());
 
 		boolean ok = false;
 		String mensaje;
 
 
 		Transferencia transferencia = new Transferencia(transfer.getNumeroCuentaEmisora(), transfer.getNumeroCuentaDestino(), transfer.getMonto(), transfer.getConcepto());
-		transferencia.saveTransferencia();
+		transferencia.GuardarTransferencia(transferencia);
 
-        if ((cuentaEmisoraOptional.isPresent())){
-			if ((cuentaReceptoraOptional.isPresent())){
+        if ((cuentaEmisora != null)){
+			if ((cuentaReceptora != null)){
 
-				Cuenta cuentaEmisora = cuentaEmisoraOptional.get();
-				Cuenta cuentaReceptora =  cuentaReceptoraOptional.get();
+				if(cuentaEmisora.getSaldo(transfer.getNumeroCuentaEmisora())>=transfer.getMonto()){			
+					cuentaEmisora.setSaldo(cuentaEmisora.getSaldo(transfer.getNumeroCuentaEmisora())-transfer.getMonto());
+					cuentaReceptora.setSaldo(cuentaReceptora.getSaldo(transfer.getNumeroCuentaDestino())+transfer.getMonto());
 
-				if(cuentaEmisora.getSaldo()>=transfer.getMonto()){			
-					cuentaEmisora.setSaldo(cuentaEmisora.getSaldo()-transfer.getMonto());
-					cuentaReceptora.setSaldo(cuentaReceptora.getSaldo()+transfer.getMonto());
-
-					cuentaEmisora.saveCuenta();
-					cuentaReceptora.saveCuenta();
+					cuentaEmisora.ActualizarCuenta(cuentaEmisora);
+					cuentaReceptora.ActualizarCuenta(cuentaReceptora);
 
 					ok = true;
 					mensaje = "Transferencia exitosa";
