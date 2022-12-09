@@ -1,13 +1,6 @@
-Ventajas:
+# Conclusiones 
 
-- Altamente escalable.
-- Diseño basado en modelos abstractos de la vida real.
-- Listo para cambios del modelo de persistencia de datos.
-- Diseño basado en clases abstractas, lo cual permite una facil generalización de tipos.
-- Bajo acoplamiento (Baja dependencia entre clases) y alta cohesión (Cada método hace unicamente lo que se solicita).
+Como equipo de Back-End nos tocó realizar tres tipos de tareas: los controladores, los DTO y los servicios. Hablando primeramente de los controladores, nosotros creamos AuthController y TransactionController, que manejaba el flujo de la información de los servicios y los clientes. El tiempo necesario para poder implementar los controladores fue de 10 minutos. Ahora bien, con respecto a DTO, llevamos a cabos los siguientes: DepositoRequestDTO, LoginRequestDTO, LoginResponseDTO, LogoutResponseDTO, TransferRequestDTP, UserDTO y WithdrawalRequestDTO, estos fueron las piezas de código que proporcionaban la información necesaria a los servicios; el tiempo que llevo completarlos fue de 1 hora aproximadamente, debido a la falta de organización que tuvimos para saber qué datos iban a necesitar los servicios que se les proporcionen. Finalmente, hablando sobre los servicios, estos fueron los que nos llevó más tiempo, alrededor de 3 días discontinuos, puesto que en diversas ocasiones se tuvieron que corregir a causa de implementaciones incorrectas de la pieza de código, así como falta de comunicación entre los métodos que se necesita de Data para poder completar los servicios. Los servicios que se implementaron fueron: AuthService, DepositService, TransferService y WithdrawalService, los cuales representaban las acciones de transferencias y autentificación del cliente.
 
-Desventajas:
 
-- Ninguna.
-- Faltan validaciones a nivel clase.
-- Bajo rendimiento debido a la forma de persistencia actual (Archivos de texto).
+Como equipo consideramos que la manera de tomar el desafío por parte de admin fue bueno con respecto a la lógica y codificación, pues tiene suficiente modularización para poder ser altamente escalable y tiene una alta legibilidad, por otro lado, algún aspecto a mejorar del equipo de Admin sería mejor la comunicación entre los diferentes equipos de desarrollos que se crearon para realizar el proyecto del banco, pues hablando de nuestra situación, hubo varias ocasiones donde hubo una falta de comunicación con el equipo de Data ya que varias veces no sabíamos si ya habían implementado sus artefactos y teníamos que trabajar “a ciegas” con nuestras piezas y viceversa.
